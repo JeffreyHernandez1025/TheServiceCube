@@ -21,24 +21,35 @@ import React, {
   useRef,
   useCallback,
   useMemo,
+  SetStateAction,
 } from "react";
 import * as Location from "expo-location";
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import {
+  ColorFormat,
+  CountdownCircleTimer,
+} from "react-native-countdown-circle-timer";
 import BottomSheet from "@gorhom/bottom-sheet";
 import Notification from "../components/notification";
-import { useFonts } from 'expo-font'
+import { useFonts } from "expo-font";
 
 import styles from "./styles/styles";
 
 const TAB_BAR_HEIGHT = 49;
 
-const Play = require("../assets/Play.png");
-const Pause = require("../assets/Pause.png");
+const Play = require("../assets/images/Play.png");
+const Pause = require("../assets/images/Pause.png");
+const ErrorMessage: SetStateAction<any> =
+  "Permission to access location was denied";
+
+const colors: any[] = ["mediumspringgreen", "red"];
+
 export default function Hours() {
   // alert
   const [showNotification, setShowNotification] = useState(false);
   // Location
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState<null | Location.LocationObject>(
+    null
+  );
   const [errorMsg, setErrorMsg] = useState(null);
   // Timer
   const [isPlaying, setIsPlaying] = useState(false);
@@ -54,7 +65,7 @@ export default function Hours() {
     console.log("handleSheetChanges", index);
   }, []);
 
-  const timerFormat = ({ remainingTime }) => {
+  const timerFormat = ({ remainingTime }: { remainingTime: any }) => {
     var hours = Math.floor(remainingTime / 3600);
     var minutes = Math.floor((remainingTime % 3600) / 60);
     var seconds = remainingTime % 60;
@@ -75,11 +86,12 @@ export default function Hours() {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+        setErrorMsg(ErrorMessage);
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location: SetStateAction<any> =
+        await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
   }, []);
@@ -93,7 +105,7 @@ export default function Hours() {
   return (
     <View style={{ flex: 1 }}>
       {showNotification === true ? (
-        <Notification setShowNotification = {setShowNotification} />
+        <Notification setShowNotification={setShowNotification} />
       ) : null}
       {location === null ? null : (
         <MapView
@@ -123,16 +135,17 @@ export default function Hours() {
               key={`${showNotification}${new Date().getTime}`}
               duration={3}
               onComplete={() => {
-                setShowNotification(true)
-                setIsPlaying(false)
-                setPlaceHolder(Play)
+                setShowNotification(true);
+                setIsPlaying(false);
+                setPlaceHolder(Play);
                 return {
                   shouldRepeat: false,
-                }
+                };
               }}
-              colors={['mediumspringgreen', 'red']}
+              // @ts-ignore
+              colors={colors}
               isPlaying={isPlaying}
-              style={{ justifyContent: 'center' }}
+              style={{ justifyContent: "center" }}
             >
               {({ remainingTime, color }) => (
                 <Text style={styles.timer}>
@@ -144,13 +157,13 @@ export default function Hours() {
           <View style={styles.timerButtons}>
             <TouchableOpacity
               onPress={() => {
-                setIsPlaying(!isPlaying)
+                setIsPlaying(!isPlaying);
 
                 if (placeHolder === Pause) {
-                  setPlaceHolder(Play)
+                  setPlaceHolder(Play);
                 } else {
-                  setPlaceHolder(Pause)
-                  setShowNotification(false)
+                  setPlaceHolder(Pause);
+                  setShowNotification(false);
                 }
               }}
             >
@@ -162,5 +175,5 @@ export default function Hours() {
         </View>
       </BottomSheet>
     </View>
-  )
+  );
 }
