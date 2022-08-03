@@ -31,6 +31,7 @@ export type RootTabParamList = {
   Home: undefined;
   Hours: undefined;
   Rewards: undefined;
+  Wallet: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

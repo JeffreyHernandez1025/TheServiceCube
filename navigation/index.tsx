@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName, Pressable, Image, View, Text } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -21,6 +21,7 @@ import Hours from "../screens/Hours";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Rewards from "../screens/Rewards";
+import Wallet from "../screens/Wallet";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
@@ -38,7 +39,6 @@ export default function Navigation({
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       <RootNavigator />
     </NavigationContainer>
@@ -55,20 +55,20 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Root"
+        name='Root'
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="NotFound"
+        name='NotFound'
         component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        options={{ title: 'Oops!' }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen name='Modal' component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
-  );
+  )
 }
 
 /**
@@ -82,40 +82,61 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName='Home'
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: 'blue',
       }}
     >
       <BottomTab.Screen
-        name="Home"
+        name='Home'
         component={Home}
-        options={({ navigation }: RootTabScreenProps<"Home">) => ({
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          header: () => null,
+        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+          title: 'Home',
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../assets/images/homeIcon.png')}
+              style={{   }}
+            />
+          ),
+          header: () => null
         })}
       />
       <BottomTab.Screen
-        name="Hours"
+        name='Hours'
         component={Hours}
         options={{
-          title: "Hours",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Hours',
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={require('../assets/images/clockIcon.png')}
+              style={{}}
+            />
+          ),
           header: () => null,
         }}
       />
       <BottomTab.Screen
-        name="Rewards"
+        name='Rewards'
         component={Rewards}
         options={{
-          title: "Rewards",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Rewards',
+          tabBarIcon: ({ color }) => (
+            <Image source={require('../assets/images/rewardIcon.png')} />
+          ),
           header: () => null,
         }}
       />
+      <BottomTab.Screen 
+      name='Wallet'
+      component={Wallet}
+      options={{
+        title: 'Wallet',
+        header: () => null,
+      }}
+      
+      />
     </BottomTab.Navigator>
-  );
+  )
 }
 
 /**

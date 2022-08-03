@@ -7,7 +7,7 @@ import Navigation from './navigation';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
+  const colorScheme = "light";
 
   if (!isLoadingComplete) {
     return null;
