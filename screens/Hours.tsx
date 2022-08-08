@@ -31,7 +31,7 @@ import {
 import BottomSheet from "@gorhom/bottom-sheet";
 import Notification from "../components/notification";
 import { useFonts } from "expo-font";
-import { Stopwatch } from 'react-native-stopwatch-timer'
+import { Stopwatch } from 'react-native-stopwatch-timer';
 
 import styles from "./styles/styles";
 
@@ -46,62 +46,56 @@ const colors: any[] = ["mediumspringgreen", "red"];
 
 export default function Hours() {
   // alert
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotification, setShowNotification] = useState(false)
   // Location
-  const [location, setLocation] = useState<null | Location.LocationObject>(
-    null
-  );
-  const [errorMsg, setErrorMsg] = useState(null);
-  // Timer
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [placeHolder, setPlaceHolder] = useState(Play);
-
-  const bottomSheetRef = useRef(null);
-
+  const [location, setLocation] = useState<null | Location.LocationObject>(null)
   // variables
-  const snapPoints = useMemo(() => ["5%", "50%"], []);
+  const snapPoints = useMemo(() => ['5%', '50%'], [])
+  const [errorMsg, setErrorMsg] = useState(null)
+  // Timer
+  const [stopwatchStart, setStopwatchStart] = useState(false)
 
+  const [totalDuration, setTotalDuration] = useState('')
+
+  const [placeHolder, setPlaceHolder] = useState(Play)
+
+  const bottomSheetRef = useRef(null)
+
+  const toggleStopwatch = () => {
+    setStopwatchStart(!stopwatchStart)
+  }
+
+  const getCurrentTime = (time: string) => {
+    setTotalDuration(time)
+    console.log(time)
+    if (time === '00:00:03'){
+      setShowNotification(true)
+    }
+  }
   // callbacks
   const handleSheetChanges = useCallback((index) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
-  const timerFormat = ({ remainingTime }: { remainingTime: any }) => {
-    var hours = Math.floor(remainingTime / 3600);
-    var minutes = Math.floor((remainingTime % 3600) / 60);
-    var seconds = remainingTime % 60;
-
-    if (hours < 10 && minutes < 10 && seconds < 10) {
-      return `${hours}:0${minutes}:0${seconds}`;
-    }
-    if (hours < 10 && minutes >= 10 && seconds < 10) {
-      return `${hours}:${minutes}:0${seconds}`;
-    }
-    if (hours < 10 && minutes < 10 && seconds >= 10) {
-      return `${hours}:0${minutes}:${seconds}`;
-    }
-    return `${hours}:${minutes}:${seconds}`;
-  };
-
+    console.log('handleSheetChanges', index)
+  }, [])
+  // geolocation
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg(ErrorMessage);
-        return;
+    ;(async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        setErrorMsg(ErrorMessage)
+        return
       }
 
       let location: SetStateAction<any> =
-        await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
+        await Location.getCurrentPositionAsync({})
+      setLocation(location)
+    })()
+  }, [])
 
-  let text = "Waiting..";
+  let text = 'Waiting..'
   if (errorMsg) {
-    text = errorMsg;
+    text = errorMsg
   } else if (location) {
-    text = JSON.stringify(location);
+    text = JSON.stringify(location)
   }
   return (
     <View style={{ flex: 1 }}>
@@ -132,39 +126,21 @@ export default function Hours() {
           <Text style={styles.timerHeader}> Beach Cleaning </Text>
           <Text style={styles.timerHeader}> Hour block: 1 hr </Text>
           <View style={styles.timerContainer}>
-            <CountdownCircleTimer
-              key={`${showNotification}${new Date().getTime}`}
-              duration={3}
-              onComplete={() => {
-                setShowNotification(true);
-                setIsPlaying(false);
-                setPlaceHolder(Play);
-                return {
-                  shouldRepeat: false,
-                };
-              }}
-              // @ts-ignore
-              colors={colors}
-              isPlaying={isPlaying}
-              style={{ justifyContent: "center" }}
-            >
-              {({ remainingTime, color }) => (
-                <Text style={styles.timer}>
-                  {timerFormat({ remainingTime })}
-                </Text>
-              )}
-            </CountdownCircleTimer>
+            <Stopwatch
+              start={stopwatchStart}
+              getTime={getCurrentTime}
+            />
           </View>
           <View style={styles.timerButtons}>
             <TouchableOpacity
-              onPress={() => {
-                setIsPlaying(!isPlaying);
+              onPress={() => {    
+                toggleStopwatch()
 
                 if (placeHolder === Pause) {
-                  setPlaceHolder(Play);
+                  setPlaceHolder(Play)
                 } else {
-                  setPlaceHolder(Pause);
-                  setShowNotification(false);
+                  setPlaceHolder(Pause)
+                  setShowNotification(false)
                 }
               }}
             >
@@ -176,5 +152,5 @@ export default function Hours() {
         </View>
       </BottomSheet>
     </View>
-  );
+  )
 }
