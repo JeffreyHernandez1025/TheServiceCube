@@ -31,13 +31,14 @@ import {
 import BottomSheet from "@gorhom/bottom-sheet";
 import Notification from "../components/notification";
 import { useFonts } from "expo-font";
+import { Stopwatch } from 'react-native-stopwatch-timer'
 
 import styles from "./styles/styles";
 
 const TAB_BAR_HEIGHT = 49;
 
-const Play = require("../assets/images/Play.png");
-const Pause = require("../assets/images/Pause.png");
+const Play = require("../assets/images/play.png");
+const Pause = require("../assets/images/pause.png");
 const ErrorMessage: SetStateAction<any> =
   "Permission to access location was denied";
 
