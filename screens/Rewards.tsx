@@ -508,7 +508,7 @@ export default function Rewards() {
                         }}
                       >
                         {' '}
-                        E{' '}
+                        Enter{' '}
                       </Text>
                     </View>
                   </View>

@@ -77,6 +77,24 @@ export default function Wallet() {
       description:
         'This NFT shows that this person has completed 200 hours of community service!',
     },
+    {
+      id: '3',
+      NFT_Image: require('../assets/images/NFTcoin.png'),
+      description:
+        'This NFT shows that this person has completed 300 hours of community service!',
+    },
+    {
+      id: '4',
+      NFT_Image: require('../assets/images/NFTcoin.png'),
+      description:
+        'This NFT shows that this person has completed 400 hours of community service!',
+    },
+    {
+      id: '5',
+      NFT_Image: require('../assets/images/NFTcoin.png'),
+      description:
+        'This NFT shows that this person has completed 500 hours of community service!',
+    },
   ])
 
   const [tabs, setTabs] = useState<Tabs[]>([

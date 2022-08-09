@@ -216,12 +216,18 @@ export default StyleSheet.create({
   },
   info: {
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 20,
     textAlign: 'center',
+    fontFamily: 'Helvetica',
+    paddingBottom: 7,
+    marginHorizontal: 50,
   },
   timerHeader: {
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: 15,
+    color: '#808080',
+    fontFamily: 'Arial',
+    paddingBottom: 80,
   },
   timer: {
     color: 'black',
@@ -234,6 +240,7 @@ export default StyleSheet.create({
   timerButtons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingTop: 30,
+    paddingTop: 90,
+    marginBottom: 20,
   },
 })
