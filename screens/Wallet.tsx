@@ -222,6 +222,7 @@ export default function Wallet() {
               height: 100,
               marginBottom: 32,
               alignContent: 'center',
+              paddingVertical: 0,
             }}
           >
             <Image

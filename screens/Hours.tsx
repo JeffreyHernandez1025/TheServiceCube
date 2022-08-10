@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native'
-import MapView, { Marker, AnimatedRegion } from 'react-native-maps'
+import MapView, { Marker, AnimatedRegion, Circle } from 'react-native-maps'
 import React, {
   useState,
   useEffect,
@@ -32,6 +32,10 @@ import BottomSheet from '@gorhom/bottom-sheet'
 import Notification from '../components/notification'
 import { useFonts } from 'expo-font'
 import { Stopwatch } from 'react-native-stopwatch-timer'
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import styles from './styles/styles'
 
@@ -50,7 +54,7 @@ export default function Hours() {
   // Location
   const [location, setLocation] = useState<null | Location.LocationObject>(null)
   // variables
-  const snapPoints = useMemo(() => ['5%', '50%'], [])
+  const snapPoints = useMemo(() => ['10%', '50%'], [])
   const [errorMsg, setErrorMsg] = useState(null)
   // Timer
   const [stopwatchStart, setStopwatchStart] = useState(false)
@@ -105,19 +109,35 @@ export default function Hours() {
       {location === null ? null : (
         <MapView
           initialRegion={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
+            latitude: 36.9632747576778,
+            longitude: -122.02053803471556,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
           style={styles.map}
-          showsUserLocation={true}
-          followsUserLocation={true}
-        ></MapView>
+          minZoomLevel={18}
+        >
+          <Marker
+            coordinate={{
+              latitude: 36.9632747576778,
+              longitude: -122.02053803471556,
+            }}
+          />
+          <Circle
+            center={{
+              latitude: 36.9632747576778,
+              longitude: -122.02053803471556,
+            }}
+            radius={35}
+            fillColor={'rgba(30, 198, 119, 0.5)'}
+            strokeColor={'white'}
+            strokeWidth={2}
+          />
+        </MapView>
       )}
       <BottomSheet
         ref={bottomSheetRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
       >

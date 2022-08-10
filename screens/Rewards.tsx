@@ -39,7 +39,15 @@ export interface TabData {
   giftCard: string
   status: boolean
 }
-
+export interface TabData2 {
+  id: string
+  source: string
+  name: string
+  price: string
+  points: string
+  giftCard: string
+  status: boolean
+}
 export interface Tabs {
   id: string
   tabName: string
@@ -92,7 +100,50 @@ export default function Rewards() {
     },
   ])
 
-  const [tabInfo2, setTaInfo2] = useState<TabData[]>([])
+  const [tabInfo2, setTabInfo2] = useState<TabData2[]>([
+    {
+      id: '1',
+      source:
+        'https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/g/g/ggplay_1573147519.jpg',
+      name: 'Google Play Raffle',
+      price: '$15',
+      points: '300',
+      giftCard: '$15 Google Play Gift Card',
+      status: true,
+    },
+    {
+      id: '2',
+      source:
+        'https://images-na.ssl-images-amazon.com/images/G/01/gc/designs/livepreview/a_generic_white_10_us_noto_email_v2016_us-main._CB627448186_.png',
+      name: 'Amazon Raffle',
+      price: '$15',
+      points: '300',
+      giftCard: '$15 Amazon Gift Card',
+      status: false,
+    },
+    {
+      id: '3',
+      source:
+        'https://www.paypalobjects.com/digitalassets/c/gifts/media/catalog/product/c/h/chilis_egift_image_82914_002_.png',
+      name: 'Chilis Raffle',
+      price: '$15',
+      points: '300',
+      giftCard: '$15 Chilis Gift Card',
+      status: false,
+    },
+    {
+      id: '4',
+      source:
+        'https://d13080yemosbe2.cloudfront.net/Images/GiftCardFaceplates/External/XBOX_fp01.png',
+      name: 'Xbox Raffle',
+      price: '$15',
+      points: '300',
+      giftCard: '$15 Xbox Gift Card',
+      status: false,
+    },
+  ])
+
+  const [tabInfo3, setTaInfo3] = useState<TabData[]>([])
 
   const [tabs, setTabs] = useState<Tabs[]>([
     {
@@ -105,7 +156,7 @@ export default function Rewards() {
       id: '2',
       tabName: 'NFTs',
       status: false,
-      data: tabInfo2,
+      data: tabInfo3,
     },
   ])
 
@@ -535,7 +586,7 @@ export default function Rewards() {
           {tabs[0].status ? 'Popular' : ''}
         </Text>
         <FlatList
-          data={getTabData()}
+          data={tabInfo2}
           horizontal={true}
           renderItem={({ item }) => (
             <View>
@@ -557,7 +608,7 @@ export default function Rewards() {
                           width: 211,
                           height: 133,
                         }}
-                        source={item.source}
+                        source={{ uri: item.source}}
                       />
                       <Text style={styles.giftCardName}> {item.name} </Text>
                       <Text style={styles.giftCardPrice}> {item.price} </Text>

@@ -43,7 +43,7 @@ export default function Notification({
         style={{
           width: 50,
           height: 50,
-          backgroundColor: '#A3E3E2',
+          backgroundColor: '#B6F5D8',
           borderRadius: 15,
           justifyContent: 'center',
           alignItems: 'center',
@@ -65,7 +65,7 @@ export default function Notification({
             color: 'white',
             fontWeight: 'bold',
             paddingBottom: 5,
-            fontFamily: 'Arial'
+            fontFamily: 'Arial',
           }}
         >
           The Service Cube
