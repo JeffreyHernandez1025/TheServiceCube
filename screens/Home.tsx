@@ -390,6 +390,7 @@ export default function Home({ navigation }: any) {
                           setSelectedItem(item)
                           setModalVisible(true)
                         }}
+                        style={{}}
                       >
                         <View style={styles.itemContainer}>
                           <Image
@@ -529,7 +530,7 @@ export default function Home({ navigation }: any) {
                                   borderRadius: 1000,
                                   marginTop: 23,
                                 }}
-                                source={{uri: item.profile}}
+                                source={{ uri: item.profile }}
                               />
                             </View>
                             <View style={{ marginTop: 23 }}>
@@ -699,17 +700,17 @@ export default function Home({ navigation }: any) {
             <View style={styles.locationContainer}>
               <Image
                 style={{
-                  width: 22,
+                  width: 19,
                   height: 22,
                   alignSelf: 'center',
                   marginLeft: 15,
                 }}
-                source={require('../assets/images/POI.png')}
+                source={require('../assets/images/location.png')}
               />
               <View style={{ marginLeft: 15 }}>
                 <Text style={styles.location}>
                   {' '}
-                  123 Los Angeles Street, 90014{' '}
+                  21 Municipal Wharf, Santa Cruz, CA 95060{' '}
                 </Text>
               </View>
             </View>
@@ -723,7 +724,7 @@ export default function Home({ navigation }: any) {
           >
             <View style={styles.emailContainer}>
               <Image
-                style={{ marginLeft: 15 }}
+                style={{ marginLeft: 15, width: 21, height: 15 }}
                 source={require('../assets/images/mail.png')}
               />
               <View style={{ marginLeft: 19 }}>
@@ -736,7 +737,7 @@ export default function Home({ navigation }: any) {
           >
             <View style={styles.phoneNumberContainer}>
               <Image
-                style={{ marginLeft: 14 }}
+                style={{ marginLeft: 17, width: 18, height: 18 }}
                 source={require('../assets/images/phone.png')}
               />
               <View style={{ marginLeft: 17 }}>

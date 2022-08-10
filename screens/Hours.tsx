@@ -122,7 +122,13 @@ export default function Hours() {
               latitude: 36.9632747576778,
               longitude: -122.02053803471556,
             }}
-          />
+          >
+            <Image
+              style={{ width: 35, height: 35 }}
+              resizeMode='contain'
+              source={require('../assets/images/POI.png')}
+            />
+          </Marker>
           <Circle
             center={{
               latitude: 36.9632747576778,

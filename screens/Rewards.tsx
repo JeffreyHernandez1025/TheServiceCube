@@ -342,7 +342,7 @@ export default function Rewards() {
                 marginLeft: 75,
                 backgroundColor: '#1EC677',
                 alignSelf: 'center',
-                paddingHorizontal: 18,
+                paddingHorizontal: 40,
                 paddingVertical: 10,
                 borderRadius: 10,
                 overflow: 'hidden',
@@ -350,7 +350,7 @@ export default function Rewards() {
               }}
             >
               {' '}
-              Redeem for 720 bloxin{' '}
+              Redeem for 7${' '}
             </Text>
           </View>
           <View>
