@@ -38,6 +38,7 @@ import styles from "./styles/styles";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { addBixon, getUser } from "../store/slices/userSlice";
 
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const TAB_BAR_HEIGHT = 49;
 
@@ -77,16 +78,15 @@ export default function Hours() {
 
   const getCurrentTime = (time: string) => {
     setTotalDuration(time);
-
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     if (totalDuration === "00:00:03") {
       console.log("run");
       setShowNotification(true);
-      dispatch(addBixon(60))
+      dispatch(addBixon(60));
     }
-  }, [totalDuration])
+  }, [totalDuration]);
 
   // // callbacks
   // const handleSheetChanges = useCallback((index) => {
