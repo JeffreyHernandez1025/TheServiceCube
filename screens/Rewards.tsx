@@ -33,7 +33,10 @@ export interface Data {
   points: string
   giftCard: string
 }
-
+export interface Data2 {
+  NFT_Image: ImageSourcePropType
+  NFT_Des: string
+}
 export interface TabData {
   id: string
   source: ImageSourcePropType
@@ -57,6 +60,7 @@ export interface Tabs {
   tabName: string
   status: boolean
   data: Data[]
+  data2: Data2[]
 }
 
 export default function Rewards() {
@@ -65,6 +69,8 @@ export default function Rewards() {
   // Pressable List
   const [modalVisible, setModalVisible] = useState(false)
   // List Data
+  const [tabInfo4, setTabInfo4] = useState([])
+
   const [tabInfo1, setTabInfo1] = useState<TabData[]>([
     {
       id: '1',
@@ -147,7 +153,7 @@ export default function Rewards() {
     },
   ])
 
-  const [tabInfo3, setTaInfo3] = useState<TabData3[]>([
+  const [tabInfo3, setTabInfo3] = useState<TabData3[]>([
     {
       NFT_Image: require('../assets/images/NFTcoin.png'),
       NFT_Des:
@@ -170,12 +176,14 @@ export default function Rewards() {
       tabName: 'Raffles',
       status: true,
       data: tabInfo1,
+      data2: tabInfo4
     },
     {
       id: '2',
       tabName: 'NFTs',
       status: false,
-      data: tabInfo3,
+      data: tabInfo4,
+      data2: tabInfo3,
     },
   ])
 
