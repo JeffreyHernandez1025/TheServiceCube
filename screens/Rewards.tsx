@@ -22,6 +22,10 @@ import DropShadow from 'react-native-drop-shadow'
 import { AntDesign } from '@expo/vector-icons'
 import Modal from 'react-native-modal'
 
+export interface TabData3{
+  NFT_Image: ImageSourcePropType
+  NFT_Des: string
+}
 export interface Data {
   source: ImageSourcePropType
   name: string
@@ -143,7 +147,22 @@ export default function Rewards() {
     },
   ])
 
-  const [tabInfo3, setTaInfo3] = useState<TabData[]>([])
+  const [tabInfo3, setTaInfo3] = useState<TabData3[]>([
+    {
+      NFT_Image: require('../assets/images/NFTcoin.png'),
+      NFT_Des:
+        'The NFT badge can be put in your crytpo wallet and will be a way to show your dedication to helping your community. It is awarded only to those who have volunteered for 12 hours.',
+    },
+    {
+      NFT_Image: require('../assets/images/NFTsilvercoin.png'),
+      NFT_Des:
+        'The NFT badge can be put in your crytpo wallet and will be a way to show your dedication to helping your community. It is awarded only to those who have volunteered for 24 hours.',
+    },
+    {
+      NFT_Image: require('../assets/images/NFTgoldcoin.png'),
+      NFT_Des: 'The NFT badge can be put in your crytpo wallet and will be a way to show your dedication to helping your community. It is awarded only to those who have volunteered for 50 hours.'
+    },
+  ])
 
   const [tabs, setTabs] = useState<Tabs[]>([
     {
@@ -274,11 +293,11 @@ export default function Rewards() {
             fontFamily: 'Poppins',
             fontSize: 10,
             paddingTop: 225,
-            paddingRight: 230,
+            paddingRight: 200,
             paddingLeft: 80,
           }}
         >
-          bloxin
+          cube points
         </Text>
       </View>
       <View style={{ position: 'absolute' }}>
@@ -329,439 +348,354 @@ export default function Rewards() {
       />
       {tabs[1].status ? (
         <View>
-          <View style={{ flexDirection: 'row' }}>
-            <Image
-              source={require('../assets/images/NFTbadge.png')}
-              style={{ width: 65, height: 65, marginLeft: 50, marginTop: 10 }}
-            />
-            <Text
-              style={{
-                fontFamily: 'PoppinsMedium',
-                fontSize: 14,
-                marginTop: 35,
-                marginLeft: 75,
-                backgroundColor: '#1EC677',
-                alignSelf: 'center',
-                paddingHorizontal: 40,
-                paddingVertical: 10,
-                borderRadius: 10,
-                overflow: 'hidden',
-                color: 'white',
-              }}
-            >
-              {' '}
-              Redeem for 7${' '}
+          <FlatList
+            data={tabInfo3}
+            style={{ alignSelf: 'center' }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  backgroundColor: '#1D9F62',
+                  marginHorizontal: 21,
+                  alignContent: 'center',
+                  borderRadius: 20,
+                  marginTop: 20,
+                  paddingBottom: 10,
+                  width: 370,
+                  height: 445,
+                }}
+              >
+                <View style={{ flexDirection: 'row' }}>
+                  <Image
+                    source={require('../assets/images/NFTbadge.png')}
+                    style={{
+                      width: 65,
+                      height: 65,
+                      marginLeft: 23,
+                      marginTop: 10,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: 'PoppinsMedium',
+                      fontSize: 14,
+                      marginTop: 35,
+                      marginLeft: 100,
+                      backgroundColor: '#1EC677',
+                      alignSelf: 'center',
+                      paddingHorizontal: 25,
+                      paddingVertical: 10,
+                      borderRadius: 10,
+                      overflow: 'hidden',
+                      color: 'white',
+                    }}
+                  >
+                    {' '}
+                    Redeem for 7${' '}
+                  </Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: 'PoppinsSemiBold',
+                      fontSize: 16,
+                      marginLeft: 11,
+                      marginTop: 8,
+                      color: 'white',
+                    }}
+                  >
+                    {' '}
+                    NFT BADGE{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins',
+                      fontSize: 12,
+                      color: 'white',
+                      paddingHorizontal: 15,
+                    }}
+                  >
+                    {item.NFT_Des}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 10,
+                  }}
+                >
+                  <Image
+                    style={{ width: 342, height: 250 }}
+                    source={item.NFT_Image}
+                  />
+                </View>
+              </View>
+            )}
+          />
+        </View>
+      ) : null}
+      {tabs[0].status ? (
+        <View>
+          {/* first list */}
+          <View>
+            <Text style={styles.listHeader}>
+              {tabs[0].status ? 'Recommended' : ''}
             </Text>
+            <FlatList
+              data={getTabData()}
+              horizontal={true}
+              renderItem={({ item }) => (
+                <View>
+                  <DropShadow style={styles.shadowProp}>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                      <View
+                        style={{
+                          marginLeft: 13,
+                          marginRight: 4,
+                          backgroundColor: 'white',
+                          borderRadius: 15,
+                          overflow: 'hidden',
+                          paddingBottom: 0,
+                        }}
+                      >
+                        <View style={{ paddingBottom: 7 }}>
+                          <Image
+                            style={{
+                              width: 211,
+                              height: 133,
+                            }}
+                            source={item.source}
+                          />
+                          <Text style={styles.giftCardName}> {item.name} </Text>
+                          <Text style={styles.giftCardPrice}>
+                            {' '}
+                            {item.price}{' '}
+                          </Text>
+                        </View>
+                        <View style={{ position: 'absolute', flex: 1 }}>
+                          <Text style={styles.giftCardPoints}>
+                            {' '}
+                            {item.points} cube points{' '}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  </DropShadow>
+                  <View style={{ flex: 1, paddingRight: 10 }}>
+                    <Modal
+                      animationIn='slideInUp'
+                      animationOut='slideOutDown'
+                      coverScreen={true}
+                      style={{
+                        backgroundColor: 'white',
+                        paddingHorizontal: 0,
+                        margin: 0,
+                      }}
+                      isVisible={modalVisible}
+                      // @ts-ignore
+                      onRequestClose={() => {
+                        Alert.alert('modal was closed')
+                        setModalVisible(!modalVisible)
+                      }}
+                    >
+                      <ImageBackground
+                        source={require('../assets/images/starbucks2.png')}
+                        style={{
+                          alignSelf: 'center',
+                          width: '100%',
+                          height: 380,
+                        }}
+                      >
+                        <AntDesign
+                          name='close'
+                          size={30}
+                          color='white'
+                          onPress={() => setModalVisible(!modalVisible)}
+                          style={{ marginTop: 50, marginLeft: 22 }}
+                        />
+                      </ImageBackground>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text
+                          style={{
+                            fontFamily: 'Poppins',
+                            color: '#43B663',
+                            fontSize: 12,
+                            letterSpacing: 2,
+                            backgroundColor: '#DDF2E3',
+                            paddingVertical: 11,
+                            paddingHorizontal: 5,
+                            marginTop: 15,
+                            marginLeft: 15,
+                            alignSelf: 'center',
+                          }}
+                        >
+                          {' '}
+                          {item.points} cube points{' '}
+                        </Text>
+                        <View
+                          style={{
+                            marginLeft: 130,
+                            flexDirection: 'row',
+                            borderWidth: 1,
+                            borderColor: '#A7A7A7',
+                            marginTop: 15,
+                            paddingHorizontal: 6,
+                            alignSelf: 'center',
+                            paddingVertical: 8,
+                          }}
+                        >
+                          <Image
+                            style={{ width: 20, height: 20 }}
+                            source={require('../assets/images/clockIcon.png')}
+                          />
+                          <Text
+                            style={{
+                              fontFamily: 'PoppinsMedium',
+                              fontSize: 12,
+                              color: '#898989',
+                            }}
+                          >
+                            {' '}
+                            21 days left{' '}
+                          </Text>
+                        </View>
+                      </View>
+                      <View>
+                        <Text
+                          style={{
+                            fontFamily: 'PoppinsSemiBold',
+                            fontSize: 20,
+                            marginTop: 28,
+                            marginLeft: 15,
+                          }}
+                        >
+                          {' '}
+                          $15 Starbucks Gift Card Raffle{' '}
+                        </Text>
+                      </View>
+                      <View
+                        style={{ flex: 1, marginHorizontal: 10, marginTop: 44 }}
+                      >
+                        <TextInput
+                          style={{
+                            borderWidth: 1,
+                            height: 65,
+                            borderRadius: 10,
+                            fontSize: 20,
+                            marginHorizontal: 5,
+                          }}
+                        />
+                        <View
+                          style={{
+                            backgroundColor: 'white',
+                            position: 'absolute',
+                          }}
+                        >
+                          <Text
+                            style={{
+                              position: 'absolute',
+                              top: -8,
+                              left: 40,
+                              backgroundColor: 'white',
+                            }}
+                          >
+                            {' '}
+                            Email{' '}
+                          </Text>
+                        </View>
+                        <View>
+                          <Text
+                            style={{
+                              backgroundColor: '#1D9F62',
+                              textAlign: 'center',
+                              fontFamily: 'PoppinsMedium',
+                              color: 'white',
+                              fontSize: 25,
+                              paddingVertical: 15,
+                              marginHorizontal: 5,
+                              borderRadius: 15,
+                              overflow: 'hidden',
+                              marginTop: 150,
+                            }}
+                          >
+                            {' '}
+                            Enter{' '}
+                          </Text>
+                        </View>
+                      </View>
+                    </Modal>
+                  </View>
+                </View>
+              )}
+              keyExtractor={(item) => item.name}
+              showsHorizontalScrollIndicator={false}
+            />
           </View>
+
+          {/* second list */}
           <View>
             <Text
               style={{
-                fontFamily: 'PoppinsMedium',
-                fontSize: 16,
-                marginLeft: 35,
-                marginTop: 8,
+                fontFamily: 'PoppinsBold',
+                fontSize: 15,
+                marginTop: 3,
+                marginLeft: 18,
+                marginBottom: 13,
               }}
             >
-              {' '}
-              NFT BADGE{' '}
+              {tabs[0].status ? 'Popular' : ''}
             </Text>
-            <Text
-              style={{ fontFamily: 'Poppins', fontSize: 12, color: '#888888', paddingHorizontal: 38 }}
-            >
-              The NFT badge can be put in your crytpo wallet and will be a way
-              to show your dedication to helping your community. It is awarded
-              only to those who volunteered for 12,000 hours straight without
-              sleep.{' '}
-            </Text>
-          </View>
-          <View style={{alignContent: 'center', alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
-          <Image style={{width: 342, height: 250}} source={require('../assets/images/NFTcoin.png')} />
+            <FlatList
+              data={tabInfo2}
+              horizontal={true}
+              renderItem={({ item }) => (
+                <View>
+                  <DropShadow style={styles.shadowProp}>
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                      <View
+                        style={{
+                          marginLeft: 13,
+                          marginRight: 4,
+                          backgroundColor: 'white',
+                          borderRadius: 15,
+                          overflow: 'hidden',
+                          paddingBottom: 0,
+                        }}
+                      >
+                        <View style={{ paddingBottom: 7 }}>
+                          <Image
+                            style={{
+                              width: 211,
+                              height: 133,
+                            }}
+                            source={{ uri: item.source }}
+                          />
+                          <Text style={styles.giftCardName}> {item.name} </Text>
+                          <Text style={styles.giftCardPrice}>
+                            {' '}
+                            {item.price}{' '}
+                          </Text>
+                        </View>
+                        <View style={{ position: 'absolute', flex: 1 }}>
+                          <Text style={styles.giftCardPoints}>
+                            {' '}
+                            {item.points} cube points
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  </DropShadow>
+                </View>
+              )}
+              keyExtractor={(item) => item.name}
+              showsHorizontalScrollIndicator={false}
+            />
           </View>
         </View>
       ) : null}
-      {/* first list */}
-      <View>
-        <Text style={styles.listHeader}>
-          {tabs[0].status ? 'Recommended' : ''}
-        </Text>
-        <FlatList
-          data={getTabData()}
-          horizontal={true}
-          renderItem={({ item }) => (
-            <View>
-              <DropShadow style={styles.shadowProp}>
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
-                  <View
-                    style={{
-                      marginLeft: 13,
-                      marginRight: 4,
-                      backgroundColor: 'white',
-                      borderRadius: 15,
-                      overflow: 'hidden',
-                      paddingBottom: 0,
-                    }}
-                  >
-                    <View style={{ paddingBottom: 7 }}>
-                      <Image
-                        style={{
-                          width: 211,
-                          height: 133,
-                        }}
-                        source={item.source}
-                      />
-                      <Text style={styles.giftCardName}> {item.name} </Text>
-                      <Text style={styles.giftCardPrice}> {item.price} </Text>
-                    </View>
-                    <View style={{ position: 'absolute', flex: 1 }}>
-                      <Text style={styles.giftCardPoints}>
-                        {' '}
-                        {item.points} bloxin{' '}
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </DropShadow>
-              <View style={{ flex: 1, paddingRight: 10 }}>
-                <Modal
-                  animationIn='slideInUp'
-                  animationOut='slideOutDown'
-                  coverScreen={true}
-                  style={{
-                    backgroundColor: 'white',
-                    paddingHorizontal: 0,
-                    margin: 0,
-                  }}
-                  isVisible={modalVisible}
-                  // @ts-ignore
-                  onRequestClose={() => {
-                    Alert.alert('modal was closed')
-                    setModalVisible(!modalVisible)
-                  }}
-                >
-                  <ImageBackground
-                    source={require('../assets/images/starbucks2.png')}
-                    style={{
-                      alignSelf: 'center',
-                      width: '100%',
-                      height: 380,
-                    }}
-                  >
-                    <AntDesign
-                      name='close'
-                      size={30}
-                      color='white'
-                      onPress={() => setModalVisible(!modalVisible)}
-                      style={{ marginTop: 50, marginLeft: 22 }}
-                    />
-                  </ImageBackground>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins',
-                        color: '#43B663',
-                        fontSize: 12,
-                        letterSpacing: 2,
-                        backgroundColor: '#DDF2E3',
-                        paddingVertical: 11,
-                        paddingHorizontal: 15,
-                        marginTop: 15,
-                        marginLeft: 15,
-                        alignSelf: 'center',
-                      }}
-                    >
-                      {' '}
-                      {item.points} bloxin{' '}
-                    </Text>
-                    <View
-                      style={{
-                        marginLeft: 150,
-                        flexDirection: 'row',
-                        borderWidth: 1,
-                        borderColor: '#A7A7A7',
-                        marginTop: 15,
-                        paddingHorizontal: 6,
-                        alignSelf: 'center',
-                        paddingVertical: 8,
-                      }}
-                    >
-                      <Image
-                        style={{ width: 20, height: 20 }}
-                        source={require('../assets/images/clockIcon.png')}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: 'PoppinsMedium',
-                          fontSize: 12,
-                          color: '#898989',
-                        }}
-                      >
-                        {' '}
-                        21 days left{' '}
-                      </Text>
-                    </View>
-                  </View>
-                  <View>
-                    <Text
-                      style={{
-                        fontFamily: 'PoppinsSemiBold',
-                        fontSize: 20,
-                        marginTop: 28,
-                        marginLeft: 15,
-                      }}
-                    >
-                      {' '}
-                      $15 Starbucks Gift Card Raffle{' '}
-                    </Text>
-                  </View>
-                  <View
-                    style={{ flex: 1, marginHorizontal: 10, marginTop: 44 }}
-                  >
-                    <TextInput
-                      style={{
-                        borderWidth: 1,
-                        height: 65,
-                        borderRadius: 10,
-                        fontSize: 20,
-                        marginHorizontal: 5,
-                      }}
-                    />
-                    <View
-                      style={{
-                        backgroundColor: 'white',
-                        position: 'absolute',
-                      }}
-                    >
-                      <Text
-                        style={{
-                          position: 'absolute',
-                          top: -8,
-                          left: 40,
-                          backgroundColor: 'white',
-                        }}
-                      >
-                        {' '}
-                        Email{' '}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text
-                        style={{
-                          backgroundColor: '#1D9F62',
-                          textAlign: 'center',
-                          fontFamily: 'PoppinsMedium',
-                          color: 'white',
-                          fontSize: 25,
-                          paddingVertical: 15,
-                          marginHorizontal: 5,
-                          borderRadius: 15,
-                          overflow: 'hidden',
-                          marginTop: 150,
-                        }}
-                      >
-                        {' '}
-                        Enter{' '}
-                      </Text>
-                    </View>
-                  </View>
-                </Modal>
-              </View>
-            </View>
-          )}
-          keyExtractor={(item) => item.name}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-
-      {/* second list */}
-      <View>
-        <Text
-          style={{
-            fontFamily: 'PoppinsBold',
-            fontSize: 15,
-            marginTop: 16,
-            marginLeft: 18,
-            marginBottom: 13,
-          }}
-        >
-          {tabs[0].status ? 'Popular' : ''}
-        </Text>
-        <FlatList
-          data={tabInfo2}
-          horizontal={true}
-          renderItem={({ item }) => (
-            <View>
-              <DropShadow style={styles.shadowProp}>
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
-                  <View
-                    style={{
-                      marginLeft: 13,
-                      marginRight: 4,
-                      backgroundColor: 'white',
-                      borderRadius: 15,
-                      overflow: 'hidden',
-                      paddingBottom: 0,
-                    }}
-                  >
-                    <View style={{ paddingBottom: 7 }}>
-                      <Image
-                        style={{
-                          width: 211,
-                          height: 133,
-                        }}
-                        source={{ uri: item.source}}
-                      />
-                      <Text style={styles.giftCardName}> {item.name} </Text>
-                      <Text style={styles.giftCardPrice}> {item.price} </Text>
-                    </View>
-                    <View style={{ position: 'absolute', flex: 1 }}>
-                      <Text style={styles.giftCardPoints}>
-                        {' '}
-                        {item.points} bloxin
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </DropShadow>
-              <View>
-                <Modal
-                  animationIn='slideInUp'
-                  animationOut='slideOutDown'
-                  isVisible={modalVisible}
-                  // @ts-ignore
-                  onRequestClose={onClose}
-                >
-                  <ImageBackground
-                    source={require('../assets/images/starbucks2.png')}
-                    style={{
-                      alignSelf: 'center',
-                      width: '100%',
-                      height: 380,
-                    }}
-                  >
-                    <AntDesign
-                      name='arrowleft'
-                      size={30}
-                      color='black'
-                      onPress={() => setModalVisible(!modalVisible)}
-                      style={{ marginTop: 50 }}
-                    />
-                  </ImageBackground>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins',
-                        color: '#43B663',
-                        fontSize: 12,
-                        letterSpacing: 2,
-                        backgroundColor: '#DDF2E3',
-                        paddingVertical: 11,
-                        paddingHorizontal: 15,
-                        marginTop: 15,
-                        marginLeft: 15,
-                      }}
-                    >
-                      {' '}
-                      {item.points} bloxin{' '}
-                    </Text>
-                    <View
-                      style={{
-                        marginLeft: 150,
-                        flexDirection: 'row',
-                        borderWidth: 1,
-                        borderColor: '#A7A7A7',
-                        marginTop: 15,
-                        paddingHorizontal: 6,
-                        alignSelf: 'center',
-                        paddingVertical: 13,
-                      }}
-                    >
-                      <Image
-                        style={{ width: 20, height: 20 }}
-                        source={require('../assets/images/clockIcon.png')}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: 'PoppinsMedium',
-                          fontSize: 12,
-                          color: '#898989',
-                        }}
-                      >
-                        {' '}
-                        21 days left{' '}
-                      </Text>
-                    </View>
-                  </View>
-                  <View>
-                    <Text
-                      style={{
-                        fontFamily: 'PoppinsSemiBold',
-                        fontSize: 20,
-                        marginTop: 28,
-                        marginLeft: 15,
-                      }}
-                    >
-                      {' '}
-                      $15 Starbucks Gift Card{' '}
-                    </Text>
-                  </View>
-                  <View
-                    style={{ flex: 1, marginHorizontal: 10, marginTop: 44 }}
-                  >
-                    <TextInput
-                      style={{
-                        borderWidth: 1,
-                        height: 65,
-                        borderRadius: 10,
-                        fontSize: 20,
-                        marginHorizontal: 5,
-                      }}
-                    />
-                    <View
-                      style={{
-                        backgroundColor: 'white',
-                        position: 'absolute',
-                      }}
-                    >
-                      <Text
-                        style={{
-                          position: 'absolute',
-                          top: -8,
-                          left: 40,
-                          backgroundColor: 'white',
-                        }}
-                      >
-                        {' '}
-                        Email{' '}
-                      </Text>
-                    </View>
-                    <View>
-                      <Text
-                        style={{
-                          backgroundColor: '#1D9F62',
-                          textAlign: 'center',
-                          fontFamily: 'PoppinsMedium',
-                          color: 'white',
-                          fontSize: 25,
-                          paddingVertical: 15,
-                          marginHorizontal: 5,
-                          borderRadius: 15,
-                          overflow: 'hidden',
-                          marginTop: 150,
-                        }}
-                      >
-                        {' '}
-                        Redeem{' '}
-                      </Text>
-                    </View>
-                  </View>
-                </Modal>
-              </View>
-            </View>
-          )}
-          keyExtractor={(item) => item.name}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
     </View>
   )
 }
@@ -804,7 +738,7 @@ const styles = StyleSheet.create({
   },
   giftCardPoints: {
     marginTop: 154,
-    marginLeft: 135,
+    marginLeft: 106,
     fontSize: 10,
     backgroundColor: '#1D9F62',
     paddingHorizontal: 5,
@@ -822,5 +756,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
+    height: 189,
   },
 })

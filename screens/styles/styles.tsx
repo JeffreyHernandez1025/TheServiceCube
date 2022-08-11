@@ -223,7 +223,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Helvetica',
     paddingBottom: 7,
-    marginHorizontal: 50,
+    marginHorizontal: 45,
   },
   timerHeader: {
     textAlign: 'center',

@@ -193,7 +193,7 @@ export default function Hours() {
                 }}
               >
                 {' '}
-                bloxin{' '}
+                cube points{' '}
               </Text>
             </View>
           </View>
