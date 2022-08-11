@@ -15,240 +15,100 @@ import {
   ImageBackground,
   ImageSourcePropType,
   AlertStatic,
-} from 'react-native'
-import React, { useState, useCallback, Children } from 'react'
-import { useFonts } from 'expo-font'
-import DropShadow from 'react-native-drop-shadow'
-import { AntDesign } from '@expo/vector-icons'
-import Modal from 'react-native-modal'
-
-export interface Data {
-  source: ImageSourcePropType
-  name: string
-  price: string
-  points: string
-  giftCard: string
-}
-
-export interface TabData {
-  id: string
-  source: ImageSourcePropType
-  name: string
-  price: string
-  points: string
-  giftCard: string
-  status: boolean
-}
-export interface TabData2 {
-  id: string
-  source: string
-  name: string
-  price: string
-  points: string
-  giftCard: string
-  status: boolean
-}
-export interface Tabs {
-  id: string
-  tabName: string
-  status: boolean
-  data: Data[]
-}
+} from "react-native";
+import React, { useState, useCallback, Children } from "react";
+import { useFonts } from "expo-font";
+import DropShadow from "react-native-drop-shadow";
+import { AntDesign } from "@expo/vector-icons";
+import Modal from "react-native-modal";
+import { useAppSelector } from "../store/hooks";
+import { getUser } from "../store/slices/userSlice";
+import useRewards from "../hooks/useRewards";
 
 export default function Rewards() {
-  // Tabs
-  const [isPress, setIsPress] = useState(false)
+  const { tabs, tabInfo2, setTabs } = useRewards();
   // Pressable List
-  const [modalVisible, setModalVisible] = useState(false)
-  // List Data
-  const [tabInfo1, setTabInfo1] = useState<TabData[]>([
-    {
-      id: '1',
-      source: require('../assets/images/starbucks.png'),
-      name: 'Starbucks Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Starbucks Gift Card',
-      status: true,
-    },
-    {
-      id: '2',
-      source: require('../assets/images/mcdonalds.png'),
-      name: 'Mcdonalds Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Mcdonalds Gift Card',
-      status: false,
-    },
-    {
-      id: '3',
-      source: require('../assets/images/bestbuy.png'),
-      name: 'Best Buy Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Best Buy Gift Card',
-      status: false,
-    },
-    {
-      id: '4',
-      source: require('../assets/images/target.png'),
-      name: 'Target Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Target Gift Card',
-      status: false,
-    },
-  ])
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const [tabInfo2, setTabInfo2] = useState<TabData2[]>([
-    {
-      id: '1',
-      source:
-        'https://static.kinguin.net/cdn-cgi/image/w=1140,q=80,fit=scale-down,f=auto/media/category/g/g/ggplay_1573147519.jpg',
-      name: 'Google Play Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Google Play Gift Card',
-      status: true,
-    },
-    {
-      id: '2',
-      source:
-        'https://images-na.ssl-images-amazon.com/images/G/01/gc/designs/livepreview/a_generic_white_10_us_noto_email_v2016_us-main._CB627448186_.png',
-      name: 'Amazon Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Amazon Gift Card',
-      status: false,
-    },
-    {
-      id: '3',
-      source:
-        'https://www.paypalobjects.com/digitalassets/c/gifts/media/catalog/product/c/h/chilis_egift_image_82914_002_.png',
-      name: 'Chilis Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Chilis Gift Card',
-      status: false,
-    },
-    {
-      id: '4',
-      source:
-        'https://d13080yemosbe2.cloudfront.net/Images/GiftCardFaceplates/External/XBOX_fp01.png',
-      name: 'Xbox Raffle',
-      price: '$15',
-      points: '300',
-      giftCard: '$15 Xbox Gift Card',
-      status: false,
-    },
-  ])
-
-  const [tabInfo3, setTaInfo3] = useState<TabData[]>([])
-
-  const [tabs, setTabs] = useState<Tabs[]>([
-    {
-      id: '1',
-      tabName: 'Raffles',
-      status: true,
-      data: tabInfo1,
-    },
-    {
-      id: '2',
-      tabName: 'NFTs',
-      status: false,
-      data: tabInfo3,
-    },
-  ])
-
-  // Fonts
-  const [loaded] = useFonts({
-    Poppins: require('../assets/fonts/Poppins.ttf'),
-    PoppinsSemiBold: require('../assets/fonts/PoppinsSemiBold.ttf'),
-    PoppinsBold: require('../assets/fonts/PoppinsBold.ttf'),
-    PoppinsMedium: require('../assets/fonts/PoppinsMedium.ttf'),
-  })
+  const user = useAppSelector(getUser);
 
   const onClose: any = () => {
-    Alert.alert('Modal has been closed.')
-    setModalVisible(!modalVisible)
-  }
+    Alert.alert("Modal has been closed.");
+    setModalVisible(!modalVisible);
+  };
 
   const getTabData = () => {
     // get index of tab with status=true
-    const i = tabs.map((t) => t.status).indexOf(true)
+    const i = tabs.map((t) => t.status).indexOf(true);
     // make that its not -1
     if (i > -1) {
-      return tabs[i].data
+      return tabs[i].data;
     }
 
-    return []
-  }
+    return [];
+  };
 
-  if (!loaded) {
-    return null
-  }
   return (
     <View style={{}}>
       <Text style={styles.rewardsTitle}> Rewards </Text>
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: "white",
           padding: 10,
           marginVertical: 10,
           borderRadius: 20,
-          flexDirection: 'row',
+          flexDirection: "row",
           width: 340,
           height: 40,
-          alignSelf: 'center',
+          alignSelf: "center",
         }}
       >
         <Image
           style={{ width: 20, height: 20 }}
-          source={require('../assets/images/Search.png')}
+          source={require("../assets/images/Search.png")}
         />
         <TextInput
-          autoCapitalize='none'
+          autoCapitalize="none"
           autoCorrect={false}
-          clearButtonMode='always'
-          placeholder='Search'
-          inlineImageLeft='../assets/Search.png'
+          clearButtonMode="always"
+          placeholder="Search"
+          inlineImageLeft="../assets/Search.png"
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: "#fff",
             marginHorizontal: 0,
             fontSize: 20,
-            color: 'black',
+            color: "black",
           }}
         />
       </View>
       <View style={styles.pointsContainer}>
         <Text
           style={{
-            color: 'white',
-            fontFamily: 'PoppinsSemiBold',
+            color: "white",
+            fontFamily: "PoppinsSemiBold",
             marginTop: 18,
             marginLeft: 16,
           }}
         >
-          {' '}
-          Current points{' '}
+          {" "}
+          Current points{" "}
         </Text>
         <Text
           style={{
-            color: 'white',
-            fontFamily: 'PoppinsSemiBold',
+            color: "white",
+            fontFamily: "PoppinsSemiBold",
             fontSize: 25,
             marginLeft: 15,
           }}
         >
-          {' '}
-          1080{' '}
+          {user?.bixon}
         </Text>
         <View
           style={{
-            backgroundColor: 'white',
+            backgroundColor: "white",
             width: 80,
             height: 27,
-            justifyContent: 'center',
+            justifyContent: "center",
             marginLeft: 16,
             borderRadius: 8,
             marginTop: 5,
@@ -256,22 +116,22 @@ export default function Rewards() {
         >
           <Text
             style={{
-              color: '#1D9F62',
-              textAlign: 'center',
-              fontFamily: 'PoppinsSemiBold',
+              color: "#1D9F62",
+              textAlign: "center",
+              fontFamily: "PoppinsSemiBold",
               fontSize: 10,
             }}
           >
-            {' '}
-            View History{' '}
+            {" "}
+            View History{" "}
           </Text>
         </View>
       </View>
-      <View style={{ position: 'absolute', alignSelf: 'center' }}>
+      <View style={{ position: "absolute", alignSelf: "center" }}>
         <Text
           style={{
-            color: 'white',
-            fontFamily: 'Poppins',
+            color: "white",
+            fontFamily: "Poppins",
             fontSize: 10,
             paddingTop: 225,
             paddingRight: 230,
@@ -281,41 +141,41 @@ export default function Rewards() {
           bloxin
         </Text>
       </View>
-      <View style={{ position: 'absolute' }}>
+      <View style={{ position: "absolute" }}>
         <Image
           style={{ width: 75, height: 75, marginLeft: 275, marginTop: 200 }}
-          source={require('../assets/images/cubePointsLogo.png')}
+          source={require("../assets/images/cubePointsLogo.png")}
         />
       </View>
       <FlatList
         data={tabs}
-        style={{ alignSelf: 'center' }}
+        style={{ alignSelf: "center" }}
         renderItem={({ item }) => (
           <View>
             <Text
               //@ts-ignore
               style={{
-                fontFamily: item.status === true ? 'PoppinsBold' : 'Poppins',
+                fontFamily: item.status === true ? "PoppinsBold" : "Poppins",
                 fontSize: 20,
                 paddingRight: 35,
                 paddingLeft: 15,
                 paddingTop: 28,
-                textDecorationLine: item.status === true ? 'underline' : null,
-                textDecorationColor: '#1EC677',
-                color: item.status === true ? '#1EC677' : 'black',
+                textDecorationLine: item.status === true ? "underline" : null,
+                textDecorationColor: "#1EC677",
+                color: item.status === true ? "#1EC677" : "black",
               }}
               onPress={() => {
                 setTabs(
                   tabs.filter((t) => {
                     if (t.id === item.id) {
-                      t.status = true
+                      t.status = true;
                     } else {
-                      t.status = false
+                      t.status = false;
                     }
 
-                    return t
+                    return t;
                   })
-                )
+                );
               }}
             >
               {item.tabName}
@@ -329,60 +189,75 @@ export default function Rewards() {
       />
       {tabs[1].status ? (
         <View>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: "row" }}>
             <Image
-              source={require('../assets/images/NFTbadge.png')}
+              source={require("../assets/images/NFTbadge.png")}
               style={{ width: 65, height: 65, marginLeft: 50, marginTop: 10 }}
             />
             <Text
               style={{
-                fontFamily: 'PoppinsMedium',
+                fontFamily: "PoppinsMedium",
                 fontSize: 14,
                 marginTop: 35,
                 marginLeft: 75,
-                backgroundColor: '#1EC677',
-                alignSelf: 'center',
+                backgroundColor: "#1EC677",
+                alignSelf: "center",
                 paddingHorizontal: 40,
                 paddingVertical: 10,
                 borderRadius: 10,
-                overflow: 'hidden',
-                color: 'white',
+                overflow: "hidden",
+                color: "white",
               }}
             >
-              {' '}
-              Redeem for 7${' '}
+              {" "}
+              Redeem for 7${" "}
             </Text>
           </View>
           <View>
             <Text
               style={{
-                fontFamily: 'PoppinsMedium',
+                fontFamily: "PoppinsMedium",
                 fontSize: 16,
                 marginLeft: 35,
                 marginTop: 8,
               }}
             >
-              {' '}
-              NFT BADGE{' '}
+              {" "}
+              NFT BADGE{" "}
             </Text>
             <Text
-              style={{ fontFamily: 'Poppins', fontSize: 12, color: '#888888', paddingHorizontal: 38 }}
+              style={{
+                fontFamily: "Poppins",
+                fontSize: 12,
+                color: "#888888",
+                paddingHorizontal: 38,
+              }}
             >
               The NFT badge can be put in your crytpo wallet and will be a way
               to show your dedication to helping your community. It is awarded
               only to those who volunteered for 12,000 hours straight without
-              sleep.{' '}
+              sleep.{" "}
             </Text>
           </View>
-          <View style={{alignContent: 'center', alignItems: 'center', justifyContent: 'center', marginTop: 10}}>
-          <Image style={{width: 342, height: 250}} source={require('../assets/images/NFTcoin.png')} />
+          <View
+            style={{
+              alignContent: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 10,
+            }}
+          >
+            <Image
+              style={{ width: 342, height: 250 }}
+              source={require("../assets/images/NFTcoin.png")}
+            />
           </View>
         </View>
       ) : null}
       {/* first list */}
       <View>
         <Text style={styles.listHeader}>
-          {tabs[0].status ? 'Recommended' : ''}
+          {tabs[0].status ? "Recommended" : ""}
         </Text>
         <FlatList
           data={getTabData()}
@@ -395,9 +270,9 @@ export default function Rewards() {
                     style={{
                       marginLeft: 13,
                       marginRight: 4,
-                      backgroundColor: 'white',
+                      backgroundColor: "white",
                       borderRadius: 15,
-                      overflow: 'hidden',
+                      overflow: "hidden",
                       paddingBottom: 0,
                     }}
                   >
@@ -412,10 +287,10 @@ export default function Rewards() {
                       <Text style={styles.giftCardName}> {item.name} </Text>
                       <Text style={styles.giftCardPrice}> {item.price} </Text>
                     </View>
-                    <View style={{ position: 'absolute', flex: 1 }}>
+                    <View style={{ position: "absolute", flex: 1 }}>
                       <Text style={styles.giftCardPoints}>
-                        {' '}
-                        {item.points} bloxin{' '}
+                        {" "}
+                        {item.points} bloxin{" "}
                       </Text>
                     </View>
                   </View>
@@ -423,94 +298,94 @@ export default function Rewards() {
               </DropShadow>
               <View style={{ flex: 1, paddingRight: 10 }}>
                 <Modal
-                  animationIn='slideInUp'
-                  animationOut='slideOutDown'
+                  animationIn="slideInUp"
+                  animationOut="slideOutDown"
                   coverScreen={true}
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: "white",
                     paddingHorizontal: 0,
                     margin: 0,
                   }}
                   isVisible={modalVisible}
                   // @ts-ignore
                   onRequestClose={() => {
-                    Alert.alert('modal was closed')
-                    setModalVisible(!modalVisible)
+                    Alert.alert("modal was closed");
+                    setModalVisible(!modalVisible);
                   }}
                 >
                   <ImageBackground
-                    source={require('../assets/images/starbucks2.png')}
+                    source={require("../assets/images/starbucks2.png")}
                     style={{
-                      alignSelf: 'center',
-                      width: '100%',
+                      alignSelf: "center",
+                      width: "100%",
                       height: 380,
                     }}
                   >
                     <AntDesign
-                      name='close'
+                      name="close"
                       size={30}
-                      color='white'
+                      color="white"
                       onPress={() => setModalVisible(!modalVisible)}
                       style={{ marginTop: 50, marginLeft: 22 }}
                     />
                   </ImageBackground>
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flexDirection: "row" }}>
                     <Text
                       style={{
-                        fontFamily: 'Poppins',
-                        color: '#43B663',
+                        fontFamily: "Poppins",
+                        color: "#43B663",
                         fontSize: 12,
                         letterSpacing: 2,
-                        backgroundColor: '#DDF2E3',
+                        backgroundColor: "#DDF2E3",
                         paddingVertical: 11,
                         paddingHorizontal: 15,
                         marginTop: 15,
                         marginLeft: 15,
-                        alignSelf: 'center',
+                        alignSelf: "center",
                       }}
                     >
-                      {' '}
-                      {item.points} bloxin{' '}
+                      {" "}
+                      {item.points} bloxin{" "}
                     </Text>
                     <View
                       style={{
                         marginLeft: 150,
-                        flexDirection: 'row',
+                        flexDirection: "row",
                         borderWidth: 1,
-                        borderColor: '#A7A7A7',
+                        borderColor: "#A7A7A7",
                         marginTop: 15,
                         paddingHorizontal: 6,
-                        alignSelf: 'center',
+                        alignSelf: "center",
                         paddingVertical: 8,
                       }}
                     >
                       <Image
                         style={{ width: 20, height: 20 }}
-                        source={require('../assets/images/clockIcon.png')}
+                        source={require("../assets/images/clockIcon.png")}
                       />
                       <Text
                         style={{
-                          fontFamily: 'PoppinsMedium',
+                          fontFamily: "PoppinsMedium",
                           fontSize: 12,
-                          color: '#898989',
+                          color: "#898989",
                         }}
                       >
-                        {' '}
-                        21 days left{' '}
+                        {" "}
+                        21 days left{" "}
                       </Text>
                     </View>
                   </View>
                   <View>
                     <Text
                       style={{
-                        fontFamily: 'PoppinsSemiBold',
+                        fontFamily: "PoppinsSemiBold",
                         fontSize: 20,
                         marginTop: 28,
                         marginLeft: 15,
                       }}
                     >
-                      {' '}
-                      $15 Starbucks Gift Card Raffle{' '}
+                      {" "}
+                      $15 Starbucks Gift Card Raffle{" "}
                     </Text>
                   </View>
                   <View
@@ -527,39 +402,39 @@ export default function Rewards() {
                     />
                     <View
                       style={{
-                        backgroundColor: 'white',
-                        position: 'absolute',
+                        backgroundColor: "white",
+                        position: "absolute",
                       }}
                     >
                       <Text
                         style={{
-                          position: 'absolute',
+                          position: "absolute",
                           top: -8,
                           left: 40,
-                          backgroundColor: 'white',
+                          backgroundColor: "white",
                         }}
                       >
-                        {' '}
-                        Email{' '}
+                        {" "}
+                        Email{" "}
                       </Text>
                     </View>
                     <View>
                       <Text
                         style={{
-                          backgroundColor: '#1D9F62',
-                          textAlign: 'center',
-                          fontFamily: 'PoppinsMedium',
-                          color: 'white',
+                          backgroundColor: "#1D9F62",
+                          textAlign: "center",
+                          fontFamily: "PoppinsMedium",
+                          color: "white",
                           fontSize: 25,
                           paddingVertical: 15,
                           marginHorizontal: 5,
                           borderRadius: 15,
-                          overflow: 'hidden',
+                          overflow: "hidden",
                           marginTop: 150,
                         }}
                       >
-                        {' '}
-                        Enter{' '}
+                        {" "}
+                        Enter{" "}
                       </Text>
                     </View>
                   </View>
@@ -576,14 +451,14 @@ export default function Rewards() {
       <View>
         <Text
           style={{
-            fontFamily: 'PoppinsBold',
+            fontFamily: "PoppinsBold",
             fontSize: 15,
             marginTop: 16,
             marginLeft: 18,
             marginBottom: 13,
           }}
         >
-          {tabs[0].status ? 'Popular' : ''}
+          {tabs[0].status ? "Popular" : ""}
         </Text>
         <FlatList
           data={tabInfo2}
@@ -596,9 +471,9 @@ export default function Rewards() {
                     style={{
                       marginLeft: 13,
                       marginRight: 4,
-                      backgroundColor: 'white',
+                      backgroundColor: "white",
                       borderRadius: 15,
-                      overflow: 'hidden',
+                      overflow: "hidden",
                       paddingBottom: 0,
                     }}
                   >
@@ -608,14 +483,14 @@ export default function Rewards() {
                           width: 211,
                           height: 133,
                         }}
-                        source={{ uri: item.source}}
+                        source={{ uri: item.source }}
                       />
                       <Text style={styles.giftCardName}> {item.name} </Text>
                       <Text style={styles.giftCardPrice}> {item.price} </Text>
                     </View>
-                    <View style={{ position: 'absolute', flex: 1 }}>
+                    <View style={{ position: "absolute", flex: 1 }}>
                       <Text style={styles.giftCardPoints}>
-                        {' '}
+                        {" "}
                         {item.points} bloxin
                       </Text>
                     </View>
@@ -624,84 +499,84 @@ export default function Rewards() {
               </DropShadow>
               <View>
                 <Modal
-                  animationIn='slideInUp'
-                  animationOut='slideOutDown'
+                  animationIn="slideInUp"
+                  animationOut="slideOutDown"
                   isVisible={modalVisible}
                   // @ts-ignore
                   onRequestClose={onClose}
                 >
                   <ImageBackground
-                    source={require('../assets/images/starbucks2.png')}
+                    source={require("../assets/images/starbucks2.png")}
                     style={{
-                      alignSelf: 'center',
-                      width: '100%',
+                      alignSelf: "center",
+                      width: "100%",
                       height: 380,
                     }}
                   >
                     <AntDesign
-                      name='arrowleft'
+                      name="arrowleft"
                       size={30}
-                      color='black'
+                      color="black"
                       onPress={() => setModalVisible(!modalVisible)}
                       style={{ marginTop: 50 }}
                     />
                   </ImageBackground>
-                  <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flexDirection: "row" }}>
                     <Text
                       style={{
-                        fontFamily: 'Poppins',
-                        color: '#43B663',
+                        fontFamily: "Poppins",
+                        color: "#43B663",
                         fontSize: 12,
                         letterSpacing: 2,
-                        backgroundColor: '#DDF2E3',
+                        backgroundColor: "#DDF2E3",
                         paddingVertical: 11,
                         paddingHorizontal: 15,
                         marginTop: 15,
                         marginLeft: 15,
                       }}
                     >
-                      {' '}
-                      {item.points} bloxin{' '}
+                      {" "}
+                      {item.points} bloxin{" "}
                     </Text>
                     <View
                       style={{
                         marginLeft: 150,
-                        flexDirection: 'row',
+                        flexDirection: "row",
                         borderWidth: 1,
-                        borderColor: '#A7A7A7',
+                        borderColor: "#A7A7A7",
                         marginTop: 15,
                         paddingHorizontal: 6,
-                        alignSelf: 'center',
+                        alignSelf: "center",
                         paddingVertical: 13,
                       }}
                     >
                       <Image
                         style={{ width: 20, height: 20 }}
-                        source={require('../assets/images/clockIcon.png')}
+                        source={require("../assets/images/clockIcon.png")}
                       />
                       <Text
                         style={{
-                          fontFamily: 'PoppinsMedium',
+                          fontFamily: "PoppinsMedium",
                           fontSize: 12,
-                          color: '#898989',
+                          color: "#898989",
                         }}
                       >
-                        {' '}
-                        21 days left{' '}
+                        {" "}
+                        21 days left{" "}
                       </Text>
                     </View>
                   </View>
                   <View>
                     <Text
                       style={{
-                        fontFamily: 'PoppinsSemiBold',
+                        fontFamily: "PoppinsSemiBold",
                         fontSize: 20,
                         marginTop: 28,
                         marginLeft: 15,
                       }}
                     >
-                      {' '}
-                      $15 Starbucks Gift Card{' '}
+                      {" "}
+                      $15 Starbucks Gift Card{" "}
                     </Text>
                   </View>
                   <View
@@ -718,39 +593,39 @@ export default function Rewards() {
                     />
                     <View
                       style={{
-                        backgroundColor: 'white',
-                        position: 'absolute',
+                        backgroundColor: "white",
+                        position: "absolute",
                       }}
                     >
                       <Text
                         style={{
-                          position: 'absolute',
+                          position: "absolute",
                           top: -8,
                           left: 40,
-                          backgroundColor: 'white',
+                          backgroundColor: "white",
                         }}
                       >
-                        {' '}
-                        Email{' '}
+                        {" "}
+                        Email{" "}
                       </Text>
                     </View>
                     <View>
                       <Text
                         style={{
-                          backgroundColor: '#1D9F62',
-                          textAlign: 'center',
-                          fontFamily: 'PoppinsMedium',
-                          color: 'white',
+                          backgroundColor: "#1D9F62",
+                          textAlign: "center",
+                          fontFamily: "PoppinsMedium",
+                          color: "white",
                           fontSize: 25,
                           paddingVertical: 15,
                           marginHorizontal: 5,
                           borderRadius: 15,
-                          overflow: 'hidden',
+                          overflow: "hidden",
                           marginTop: 150,
                         }}
                       >
-                        {' '}
-                        Redeem{' '}
+                        {" "}
+                        Redeem{" "}
                       </Text>
                     </View>
                   </View>
@@ -763,42 +638,42 @@ export default function Rewards() {
         />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   rewardsTitle: {
     fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     paddingTop: 83,
   },
   pointsContainer: {
-    backgroundColor: '#1D9F62',
+    backgroundColor: "#1D9F62",
     width: 340,
     height: 120,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderRadius: 15,
   },
   Tabs: {
     fontSize: 20,
   },
   listHeader: {
-    fontFamily: 'PoppinsBold',
+    fontFamily: "PoppinsBold",
     fontSize: 15,
     paddingTop: 14,
     paddingLeft: 13,
     paddingBottom: 13,
   },
   giftCardName: {
-    fontFamily: 'PoppinsBold',
-    color: '#184A2C',
+    fontFamily: "PoppinsBold",
+    color: "#184A2C",
     paddingLeft: 12,
     fontSize: 15,
   },
   giftCardPrice: {
-    fontFamily: 'PoppinsBold',
-    color: '#184A2C',
+    fontFamily: "PoppinsBold",
+    color: "#184A2C",
     fontSize: 15,
     paddingLeft: 12,
   },
@@ -806,21 +681,21 @@ const styles = StyleSheet.create({
     marginTop: 154,
     marginLeft: 135,
     fontSize: 10,
-    backgroundColor: '#1D9F62',
+    backgroundColor: "#1D9F62",
     paddingHorizontal: 5,
     paddingVertical: 3,
-    fontFamily: 'Poppins',
-    color: 'white',
+    fontFamily: "Poppins",
+    color: "white",
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1D9F62',
-    overflow: 'hidden',
+    borderColor: "#1D9F62",
+    overflow: "hidden",
     marginRight: 9,
   },
   shadowProp: {
-    shadowColor: '#171717',
+    shadowColor: "#171717",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
   },
-})
+});
