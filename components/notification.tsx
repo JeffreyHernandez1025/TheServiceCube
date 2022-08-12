@@ -71,7 +71,7 @@ export default function Notification({
           The Service Cube
         </Text>
         <Text style={{ color: 'white', fontSize: 15, fontFamily: 'Arial' }}>
-          You completed 1 hour! You have recieved 60 bloxin!
+          You completed 1 hour! You have recieved 60 cubes!
         </Text>
       </View>
       <View style={{ width: 25, height: 20 }}>

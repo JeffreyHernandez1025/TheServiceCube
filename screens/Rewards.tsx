@@ -27,6 +27,24 @@ import useRewards from "../hooks/useRewards";
 
 export default function Rewards() {
   const { tabs, tabInfo2, setTabs } = useRewards();
+
+  const [tabInfo3, setTabInfo3] = useState([
+    {
+      NFT_Image: require("../assets/images/NFTcoin.png"),
+      NFT_Des:
+        "The NFT badge can be put in your crytpo wallet and will be a way to show your dedication to helping your community. It is awarded only to those who have volunteered for 12 hours.",
+    },
+    {
+      NFT_Image: require("../assets/images/NFTsilvercoin.png"),
+      NFT_Des:
+        "The NFT badge can be put in your crytpo wallet and will be a way to show your dedication to helping your community. It is awarded only to those who have volunteered for 24 hours.",
+    },
+    {
+      NFT_Image: require("../assets/images/NFTgoldcoin.png"),
+      NFT_Des:
+        "The NFT badge can be put in your crytpo wallet and will be a way to show your dedication to helping your community. It is awarded only to those who have volunteered for 50 hours.",
+    },
+  ]);
   // Pressable List
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -234,7 +252,7 @@ export default function Rewards() {
                     }}
                   >
                     {" "}
-                    Redeem for 7${" "}
+                    Redeem for $7{" "}
                   </Text>
                 </View>
                 <View>
@@ -316,7 +334,7 @@ export default function Rewards() {
                     <View style={{ position: "absolute", flex: 1 }}>
                       <Text style={styles.giftCardPoints}>
                         {" "}
-                        {item.points} bloxin{" "}
+                        {item.points} cubes{" "}
                       </Text>
                     </View>
                   </View>
@@ -517,7 +535,7 @@ export default function Rewards() {
                     <View style={{ position: "absolute", flex: 1 }}>
                       <Text style={styles.giftCardPoints}>
                         {" "}
-                        {item.points} bloxin
+                        {item.points} cubes
                       </Text>
                     </View>
                   </View>
@@ -562,7 +580,7 @@ export default function Rewards() {
                       }}
                     >
                       {" "}
-                      {item.points} bloxin{" "}
+                      {item.points} cubes{" "}
                     </Text>
                     <View
                       style={{

@@ -199,7 +199,7 @@ export default function Hours() {
                 }}
               >
                 {" "}
-                bloxin{" "}
+                cubes{" "}
               </Text>
             </View>
           </View>
