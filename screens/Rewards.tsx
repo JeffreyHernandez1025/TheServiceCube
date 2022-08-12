@@ -190,71 +190,96 @@ export default function Rewards() {
       />
       {tabs[1].status ? (
         <View>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../assets/images/NFTbadge.png")}
-              style={{ width: 65, height: 65, marginLeft: 50, marginTop: 10 }}
-            />
-            <Text
-              style={{
-                fontFamily: "PoppinsMedium",
-                fontSize: 14,
-                marginTop: 35,
-                marginLeft: 75,
-                backgroundColor: "#1EC677",
-                alignSelf: "center",
-                paddingHorizontal: 40,
-                paddingVertical: 10,
-                borderRadius: 10,
-                overflow: "hidden",
-                color: "white",
-              }}
-            >
-              {" "}
-              Redeem for $7{" "}
-            </Text>
-          </View>
-          <View>
-            <Text
-              style={{
-                fontFamily: "PoppinsMedium",
-                fontSize: 16,
-                marginLeft: 35,
-                marginTop: 8,
-              }}
-            >
-              {" "}
-              NFT BADGE{" "}
-            </Text>
-            <Text
-              style={{
-                fontFamily: "Poppins",
-                fontSize: 12,
-                color: "#888888",
-                paddingHorizontal: 38,
-              }}
-            >
-              The NFT badge can be put in your crytpo wallet and will be a way
-              to show your dedication to helping your community. It is awarded
-              only to those who volunteered for 12,000 hours straight without
-              sleep.{" "}
-            </Text>
-          </View>
-          <View
-            style={{
-              alignContent: "center",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 10,
-            }}
-          >
-            <Image
-              style={{ width: 342, height: 250 }}
-              source={require("../assets/images/NFTcoin.png")}
-            />
-          </View>
+          <FlatList
+            data={tabInfo3}
+            style={{ alignSelf: "center" }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  backgroundColor: "#1D9F62",
+                  marginHorizontal: 21,
+                  alignContent: "center",
+                  borderRadius: 20,
+                  marginTop: 20,
+                  paddingBottom: 10,
+                  width: 370,
+                  height: 445,
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Image
+                    source={require("../assets/images/NFTbadge.png")}
+                    style={{
+                      width: 65,
+                      height: 65,
+                      marginLeft: 23,
+                      marginTop: 10,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontFamily: "PoppinsMedium",
+                      fontSize: 14,
+                      marginTop: 35,
+                      marginLeft: 100,
+                      backgroundColor: "#1EC677",
+                      alignSelf: "center",
+                      paddingHorizontal: 25,
+                      paddingVertical: 10,
+                      borderRadius: 10,
+                      overflow: "hidden",
+                      color: "white",
+                    }}
+                  >
+                    {" "}
+                    Redeem for 7${" "}
+                  </Text>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: "PoppinsSemiBold",
+                      fontSize: 16,
+                      marginLeft: 11,
+                      marginTop: 8,
+                      color: "white",
+                    }}
+                  >
+                    {" "}
+                    NFT BADGE{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: "Poppins",
+                      fontSize: 12,
+                      color: "white",
+                      paddingHorizontal: 15,
+                    }}
+                  >
+                    {item.NFT_Des}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    alignContent: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  <Image
+                    style={{ width: 342, height: 250 }}
+                    source={item.NFT_Image}
+                  />
+                </View>
+              </View>
+            )}
+          />
         </View>
       ) : null}
+
       {/* first list */}
       <View>
         <Text style={styles.listHeader}>
@@ -346,7 +371,7 @@ export default function Rewards() {
                       }}
                     >
                       {" "}
-                      {item.points} bloxin{" "}
+                      {item.points} cubes{" "}
                     </Text>
                     <View
                       style={{
