@@ -42,8 +42,8 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const TAB_BAR_HEIGHT = 49;
 
-const Play = require("../assets/images/Play.png");
-const Pause = require("../assets/images/Pause.png");
+const Play = require("../assets/images/play.png");
+const Pause = require("../assets/images/pause.png");
 const ErrorMessage: SetStateAction<any> =
   "Permission to access location was denied";
 
@@ -198,8 +198,8 @@ export default function Hours() {
                   marginTop: 7,
                 }}
               >
-                {' '}
-                bloxin{' '}
+                {" "}
+                bloxin{" "}
               </Text>
             </View>
           </View>
