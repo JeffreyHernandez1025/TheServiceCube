@@ -64,8 +64,7 @@ export interface Tabs {
 }
 
 export default function Rewards() {
-  // Tabs
-  const [isPress, setIsPress] = useState(false)
+  const { tabs, tabInfo2, setTabs } = useRewards();
   // Pressable List
   const [modalVisible, setModalVisible] = useState(false)
   // List Data
@@ -196,86 +195,82 @@ export default function Rewards() {
   })
 
   const onClose: any = () => {
-    Alert.alert('Modal has been closed.')
-    setModalVisible(!modalVisible)
-  }
+    Alert.alert("Modal has been closed.");
+    setModalVisible(!modalVisible);
+  };
 
   const getTabData = () => {
     // get index of tab with status=true
-    const i = tabs.map((t) => t.status).indexOf(true)
+    const i = tabs.map((t) => t.status).indexOf(true);
     // make that its not -1
     if (i > -1) {
-      return tabs[i].data
+      return tabs[i].data;
     }
 
-    return []
-  }
+    return [];
+  };
 
-  if (!loaded) {
-    return null
-  }
   return (
     <View style={{}}>
       <Text style={styles.rewardsTitle}> Rewards </Text>
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: "white",
           padding: 10,
           marginVertical: 10,
           borderRadius: 20,
-          flexDirection: 'row',
+          flexDirection: "row",
           width: 340,
           height: 40,
-          alignSelf: 'center',
+          alignSelf: "center",
         }}
       >
         <Image
           style={{ width: 20, height: 20 }}
-          source={require('../assets/images/Search.png')}
+          source={require("../assets/images/Search.png")}
         />
         <TextInput
-          autoCapitalize='none'
+          autoCapitalize="none"
           autoCorrect={false}
-          clearButtonMode='always'
-          placeholder='Search'
-          inlineImageLeft='../assets/Search.png'
+          clearButtonMode="always"
+          placeholder="Search"
+          inlineImageLeft="../assets/Search.png"
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: "#fff",
             marginHorizontal: 0,
             fontSize: 20,
-            color: 'black',
+            color: "black",
           }}
         />
       </View>
       <View style={styles.pointsContainer}>
         <Text
           style={{
-            color: 'white',
-            fontFamily: 'PoppinsSemiBold',
+            color: "white",
+            fontFamily: "PoppinsSemiBold",
             marginTop: 18,
             marginLeft: 16,
           }}
         >
-          {' '}
-          Current points{' '}
+          {" "}
+          Current points{" "}
         </Text>
         <Text
           style={{
-            color: 'white',
-            fontFamily: 'PoppinsSemiBold',
+            color: "white",
+            fontFamily: "PoppinsSemiBold",
             fontSize: 25,
             marginLeft: 15,
           }}
         >
-          {' '}
-          1080{' '}
+          {user?.bixon}
         </Text>
         <View
           style={{
-            backgroundColor: 'white',
+            backgroundColor: "white",
             width: 80,
             height: 27,
-            justifyContent: 'center',
+            justifyContent: "center",
             marginLeft: 16,
             borderRadius: 8,
             marginTop: 5,
@@ -283,22 +278,22 @@ export default function Rewards() {
         >
           <Text
             style={{
-              color: '#1D9F62',
-              textAlign: 'center',
-              fontFamily: 'PoppinsSemiBold',
+              color: "#1D9F62",
+              textAlign: "center",
+              fontFamily: "PoppinsSemiBold",
               fontSize: 10,
             }}
           >
-            {' '}
-            View History{' '}
+            {" "}
+            View History{" "}
           </Text>
         </View>
       </View>
-      <View style={{ position: 'absolute', alignSelf: 'center' }}>
+      <View style={{ position: "absolute", alignSelf: "center" }}>
         <Text
           style={{
-            color: 'white',
-            fontFamily: 'Poppins',
+            color: "white",
+            fontFamily: "Poppins",
             fontSize: 10,
             paddingTop: 225,
             paddingRight: 200,
@@ -308,41 +303,41 @@ export default function Rewards() {
           cube points
         </Text>
       </View>
-      <View style={{ position: 'absolute' }}>
+      <View style={{ position: "absolute" }}>
         <Image
           style={{ width: 75, height: 75, marginLeft: 275, marginTop: 200 }}
-          source={require('../assets/images/cubePointsLogo.png')}
+          source={require("../assets/images/cubePointsLogo.png")}
         />
       </View>
       <FlatList
         data={tabs}
-        style={{ alignSelf: 'center' }}
+        style={{ alignSelf: "center" }}
         renderItem={({ item }) => (
           <View>
             <Text
               //@ts-ignore
               style={{
-                fontFamily: item.status === true ? 'PoppinsBold' : 'Poppins',
+                fontFamily: item.status === true ? "PoppinsBold" : "Poppins",
                 fontSize: 20,
                 paddingRight: 35,
                 paddingLeft: 15,
                 paddingTop: 28,
-                textDecorationLine: item.status === true ? 'underline' : null,
-                textDecorationColor: '#1EC677',
-                color: item.status === true ? '#1EC677' : 'black',
+                textDecorationLine: item.status === true ? "underline" : null,
+                textDecorationColor: "#1EC677",
+                color: item.status === true ? "#1EC677" : "black",
               }}
               onPress={() => {
                 setTabs(
                   tabs.filter((t) => {
                     if (t.id === item.id) {
-                      t.status = true
+                      t.status = true;
                     } else {
-                      t.status = false
+                      t.status = false;
                     }
 
-                    return t
+                    return t;
                   })
-                )
+                );
               }}
             >
               {item.tabName}
@@ -705,42 +700,42 @@ export default function Rewards() {
         </View>
       ) : null}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   rewardsTitle: {
     fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     paddingTop: 83,
   },
   pointsContainer: {
-    backgroundColor: '#1D9F62',
+    backgroundColor: "#1D9F62",
     width: 340,
     height: 120,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderRadius: 15,
   },
   Tabs: {
     fontSize: 20,
   },
   listHeader: {
-    fontFamily: 'PoppinsBold',
+    fontFamily: "PoppinsBold",
     fontSize: 15,
     paddingTop: 14,
     paddingLeft: 13,
     paddingBottom: 13,
   },
   giftCardName: {
-    fontFamily: 'PoppinsBold',
-    color: '#184A2C',
+    fontFamily: "PoppinsBold",
+    color: "#184A2C",
     paddingLeft: 12,
     fontSize: 15,
   },
   giftCardPrice: {
-    fontFamily: 'PoppinsBold',
-    color: '#184A2C',
+    fontFamily: "PoppinsBold",
+    color: "#184A2C",
     fontSize: 15,
     paddingLeft: 12,
   },
@@ -748,22 +743,22 @@ const styles = StyleSheet.create({
     marginTop: 154,
     marginLeft: 106,
     fontSize: 10,
-    backgroundColor: '#1D9F62',
+    backgroundColor: "#1D9F62",
     paddingHorizontal: 5,
     paddingVertical: 3,
-    fontFamily: 'Poppins',
-    color: 'white',
+    fontFamily: "Poppins",
+    color: "white",
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1D9F62',
-    overflow: 'hidden',
+    borderColor: "#1D9F62",
+    overflow: "hidden",
     marginRight: 9,
   },
   shadowProp: {
-    shadowColor: '#171717',
+    shadowColor: "#171717",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
     height: 189,
   },
-})
+});

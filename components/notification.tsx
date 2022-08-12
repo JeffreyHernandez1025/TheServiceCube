@@ -31,7 +31,7 @@ export default function Notification({
         backgroundColor: '#1EC677',
         position: 'absolute',
         zIndex: 2,
-        top: 35,
+        top: 55,
         width: 393,
         height: 100,
         alignSelf: 'center',
